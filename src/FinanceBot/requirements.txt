@@ -1,0 +1,2 @@
+python-telegram-bot==13.13
+filelock==3.12.2

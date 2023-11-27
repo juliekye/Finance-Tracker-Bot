@@ -1,0 +1,10 @@
+version: '3'
+
+services:
+  finance_bot:
+    volumes:
+      - ../src/FinanceBot:/workspace/src:rw
+      - ../.vscode/FinanceBot:/workspace/.vscode:rw
+      - ../.docker:/workspace/.docker:rw
+      - ../src/shared:/workspace/src/shared:rw
+    command: ["tail", "-f", "/dev/null"]

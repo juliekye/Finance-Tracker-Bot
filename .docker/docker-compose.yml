@@ -1,0 +1,31 @@
+version: '3.8'
+
+services:
+  two_fa_bot:
+    build:
+      context: ../
+      dockerfile: ./src/TwoFABot/Dockerfile
+    container_name: two_fa_bot
+    env_file:
+      - .env
+    user: $USERNAME
+    command: python3 /workspace/src/start_bot.py
+    restart: unless-stopped
+    volumes:
+      - ../storage/PGP/:/workspace/PGP:ro
+      - ../storage/logs/:/workspace/logs:rw
+      - ../src/shared:/workspace/src/shared:ro
+  finance_bot:
+    build:
+      context: ../
+      dockerfile: ./src/FinanceBot/Dockerfile
+    container_name: finance_bot
+    env_file:
+      - .env
+    user: $USERNAME
+    command: python3 /workspace/src/start_finance_bot.py
+    restart: unless-stopped
+    volumes:
+      - ../storage/logs:/workspace/logs:rw
+      - ../storage/FinanceBot:/workspace/data:rw
+      - ../src/shared:/workspace/src/shared:ro

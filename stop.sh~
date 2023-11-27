@@ -1,0 +1,24 @@
+#!/bin/bash
+
+# Source environment variables from .docker/.env
+set -a
+source .docker/.env
+set +a
+
+# Function to check if a container is running
+container_is_running() {
+    local container_name=$1
+    docker inspect -f '{{.State.Running}}' $container_name 2>/dev/null || echo "false"
+}
+
+# Stop two fa bot container if running
+if [[ "$(container_is_running $TWO_FA_BOT_CONTAINER_NAME)" == "true" ]]; then
+    echo "Stopping TWO FA BOT container..."
+    docker stop $TWO_FA_BOT_CONTAINER_NAME
+fi
+
+# Stop finance bot container if running
+if [[ "$(container_is_running $FINANCE_BOT_CONTAINER_NAME)" == "true" ]]; then
+    echo "Stopping FINANCE BOT container..."
+    docker stop $FINANCE_BOT_CONTAINER_NAME
+fi

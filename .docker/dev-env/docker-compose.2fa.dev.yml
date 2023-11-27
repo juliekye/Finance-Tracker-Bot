@@ -1,0 +1,10 @@
+version: '3'
+
+services:
+  two_fa_bot:
+    volumes:
+      - ../src/TwoFABot:/workspace/src:rw
+      - ../.vscode/TwoFABot:/workspace/.vscode:rw
+      - ../.docker:/workspace/.docker:rw
+      - ../src/shared:/workspace/src/shared:rw
+    command: ["tail", "-f", "/dev/null"]
